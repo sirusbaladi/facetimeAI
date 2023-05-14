@@ -114,10 +114,12 @@ talkButton.onclick = () => {
                 input: chatGptOutput,
                 provider: {
                   type: "microsoft",
-                  voice_id: "en-US-JennyNeural",
+                  voice_id: "en-US-SaraNeural",
+                  voice_config: {
+                    "style": "Cheerful"
+                  }
                 },
               },
-              // driver_url: "bank://lively/",
               config: {
                 stitch: true,
               },
