@@ -40,7 +40,8 @@ connectButton.onclick = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      source_url: "https://d-id-public-bucket.s3.amazonaws.com/or-roman.jpg",
+      source_url:
+        "https://create-images-results.d-id.com/DefaultPresenters/Noelle_f/image.jpeg",
     }),
   });
 
@@ -78,46 +79,55 @@ connectButton.onclick = async () => {
   );
 };
 
-
 const talkButton = document.getElementById("talk-button");
-talkButton.onclick = async () => {
-  console.log('PRESSED')
+let lastFetchedText = "";
 
-  const response = await fetch("gpt.txt");
-  const text = await response.text();
-  const chatGptOutput = text.trim();
+// Start the interval when the button is clicked
+talkButton.onclick = () => {
+  setInterval(async () => {
+    console.log("Checking file");
 
-  // connectionState not supported in firefox
-  if (
-    peerConnection?.signalingState === "stable" ||
-    peerConnection?.iceConnectionState === "connected"
-  ) {
-    const talkResponse = await fetch(
-      `${DID_API.url}/talks/streams/${streamId}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${DID_API.key}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          script: {
-            type: "text",
-            input: chatGptOutput,
-            provider: {
-              type: "microsoft",
-              voice_id: "en-US-JennyNeural",
+    const response = await fetch("gpt.txt");
+    const text = await response.text();
+    const chatGptOutput = text.trim();
+
+    if (chatGptOutput !== lastFetchedText && chatGptOutput !== "") {
+      console.log("File changed");
+      lastFetchedText = chatGptOutput;
+
+      // connectionState not supported in firefox
+      if (
+        peerConnection?.signalingState === "stable" ||
+        peerConnection?.iceConnectionState === "connected"
+      ) {
+        const talkResponse = await fetch(
+          `${DID_API.url}/talks/streams/${streamId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Basic ${DID_API.key}`,
+              "Content-Type": "application/json",
             },
-          },
-          driver_url: "bank://lively/",
-          config: {
-            stitch: true,
-          },
-          session_id: sessionId,
-        }),
+            body: JSON.stringify({
+              script: {
+                type: "text",
+                input: chatGptOutput,
+                provider: {
+                  type: "microsoft",
+                  voice_id: "en-US-JennyNeural",
+                },
+              },
+              // driver_url: "bank://lively/",
+              config: {
+                stitch: true,
+              },
+              session_id: sessionId,
+            }),
+          }
+        );
       }
-    );
-  }
+    }
+  }, 100); // This will check the file every 0.1 seconds (100 milliseconds)
 };
 
 const destroyButton = document.getElementById("destroy-button");
