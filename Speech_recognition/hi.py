@@ -1,4 +1,5 @@
 import time
+import chatgpt
 
 cumulative = []
 previous_content = ''
@@ -14,13 +15,13 @@ while True:
         previous_content = current_content  # Update previous_content
         last_change_time = time.time()  # Update the time of the last change
         cumulative.append(current_content)
-        #print("".join(cumulative))
 
     # If the content hasn't changed for 3 or more seconds
-    elif time.time() - last_change_time >= 5: #TODO: change to lower, experiment.
-        # print('No difference')
+    elif time.time() - last_change_time >= 3: #TODO: change to lower, experiment.
         last_change_time = time.time()  # Update the time of the last change
-        print("".join(cumulative))
+
+        chatgpt.main("".join(cumulative))
+
         print("------------sent to GPT------------")
         cumulative = []
 

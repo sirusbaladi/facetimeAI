@@ -23,7 +23,6 @@ if __name__ == "__main__":
 
                 return response.message
 
-
         microphone_input, speaker_output = create_microphone_input_and_speaker_output(
                 streaming=True, use_default_devices=True
         )

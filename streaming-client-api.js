@@ -78,8 +78,15 @@ connectButton.onclick = async () => {
   );
 };
 
+
 const talkButton = document.getElementById("talk-button");
 talkButton.onclick = async () => {
+  console.log('PRESSED')
+
+  const response = await fetch("gpt.txt");
+  const text = await response.text();
+  const chatGptOutput = text.trim();
+
   // connectionState not supported in firefox
   if (
     peerConnection?.signalingState === "stable" ||
@@ -96,7 +103,7 @@ talkButton.onclick = async () => {
         body: JSON.stringify({
           script: {
             type: "text",
-            input: "hi motherfucker",
+            input: chatGptOutput,
             provider: {
               type: "microsoft",
               voice_id: "en-US-JennyNeural",

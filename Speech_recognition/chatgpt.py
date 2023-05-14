@@ -5,32 +5,33 @@ openai.api_key = "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"
 
 def chat_with_openai(messages):
     conversation = [
-        {"role": "system", "content": "You are a helpful phone call assistant."},
+        {"role": "system", "content": "You are a professional therapist, I want you to psychologically analyze whatever I say. To introduce yourself, say the following: Hello! I am your personal therapist, what would you like to talk about?"},
     ] + messages
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=conversation
+        messages=conversation,
+        temperature=0,
+        max_tokens=100,
     )
 
     message = response['choices'][0]['message']['content']
     return message
 
-def main():
+def main(user_input):
+    # 'Today was a sad day. My mom forgot it was my birthday and I wish I was never born.'
     messages = []
 
-    print("Welcome to the chat! Type 'exit' to quit.")
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() == "exit":
-            break
+    if user_input != "":
 
         messages.append({"role": "user", "content": f"{user_input}"})
         response = chat_with_openai(messages)
 
-        print("AI:", response)
-        messages.append({"role": "assistant", "content": f"{response}"})
+        with open('gpt.txt', 'w') as f:
+            f.write(response)
 
+        messages.append({"role": "assistant", "content": f"{response}"})
+        user_input = ""
 
 if __name__ == "__main__":
     main()
