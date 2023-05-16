@@ -1,29 +1,24 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 def chat_with_openai(messages):
     conversation = [
-        {"role": "system", "content": "You a world-class therapist. Great advisor. \
-         You will answer like a professional therapist who cares about the patients.\
-         You have empathy and all the qualities that a great therapist has.\
-         Feel free to ask questions, give advice, or so on if that's what a therapist would do.\
-         Keep the answers short."},
+        {"role": "system", "content": "You a world-class therapist. Feel free to ask questions, give advice, or so on if that's what a therapist would do.\
+         Only when I say goodbye or thank you, end the conversation by saying byeee! in a very friendly way, otherwise, do not end the conversation. Avoid suggesting seeing a therapist. Keep your answers short, less than 50 words" },
     ] + messages
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=conversation,
-        temperature=0.7,
-        max_tokens=100,
+        temperature=1
     )
 
     message = response['choices'][0]['message']['content']
     return message
 
 def main(user_input):
-    # 'Today was a sad day. My mom forgot it was my birthday and I wish I was never born.'
     messages = []
 
     if user_input != "":

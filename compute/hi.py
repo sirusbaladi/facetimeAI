@@ -18,7 +18,7 @@ while True:
         cumulative.append(current_content)
 
     # If the content hasn't changed for 3 or more seconds
-    elif time.time() - last_change_time >= 2: #TODO: change to lower, experiment.
+    elif time.time() - last_change_time >= 1: #TODO: change to lower, experiment.
         last_change_time = time.time()  # Update the time of the last change
 
 
