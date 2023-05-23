@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Hello! I'm here to help and support you. What brings you to therapy today?
+=======
+Can you please provide me more context or information about your situation to better understand how to help you?
+>>>>>>> 09ec70afde6d0ce276d319105511bba980aca86f

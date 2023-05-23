@@ -24,7 +24,6 @@ Keep the answers short!"},
     return message
 
 def main(user_input):
-    # 'Today was a sad day. My mom forgot it was my birthday and I wish I was never born.'
     messages = []
 
     if user_input != "":
