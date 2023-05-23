@@ -18,13 +18,12 @@ while True:
         cumulative.append(current_content)
 
     # If the content hasn't changed for 3 or more seconds
-    elif time.time() - last_change_time >= 2: #TODO: change to lower, experiment.
+    elif time.time() - last_change_time >= 2.5: #TODO: change to lower, experiment.
+        chatgpt.main("".join(cumulative))
         last_change_time = time.time()  # Update the time of the last change
 
-
-        chatgpt.main("".join(cumulative))
 
 
         cumulative = []
 
-    time.sleep(0.3) # TODO: change to lower, experiment.
+    time.sleep(0.1) # TODO: change to lower, experiment.

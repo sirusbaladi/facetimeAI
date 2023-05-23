@@ -28,11 +28,29 @@ if __name__ == "__main__":
         )
 
         # replace with the transcriber you want to test
+        # transcriber = DeepgramTranscriber(
+        #     DeepgramTranscriberConfig.from_input_device(
+        #         microphone_input, endpointing_config=PunctuationEndpointingConfig()
+        #     )
+
+        # )
+
         transcriber = DeepgramTranscriber(
-            DeepgramTranscriberConfig.from_input_device(
-                microphone_input, endpointing_config=PunctuationEndpointingConfig()
+            DeepgramTranscriberConfig(
+            sampling_rate=44100,
+            audio_encoding="linear16",
+            chunk_size=1,
+            endpointing_config=PunctuationEndpointingConfig(time_cutoff_seconds=0.4), 
+            downsampling=None,
+            min_interrupt_confidence=None,
+            language=None, 
+            model=None, 
+            tier=None, 
+            version=None,
+            keywords=None,
             )
         )
+
 
         transcriber.set_on_response(on_response)
         asyncio.create_task(transcriber.run())

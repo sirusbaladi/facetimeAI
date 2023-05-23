@@ -1,18 +1,23 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = ""
 
 
 def chat_with_openai(messages):
     conversation = [
-        {"role": "system", "content": "You are a professional therapist, I want you to psychologically analyze whatever I say. To introduce yourself, say the following: Hello! I am your personal therapist, what would you like to talk about? KEEP THE ANSWER SHORT"},
+        {"role": "system", "content": "You a world-class therapist. Never say to seek \
+         a therapist or cauncellor as you are the therapist. \
+         Your purpose is to run a therapy session.  Go deep.\
+          Unlock the inner motives and offer on how to help. \
+         Don't just say what to do to the patient but help doing the things you suggest as a good therapist.\
+Keep the answers short!"},
     ] + messages
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=conversation,
-        temperature=0,
-        max_tokens=40,
+        temperature=0.7,
+        max_tokens=100,
     )
 
     message = response['choices'][0]['message']['content']
